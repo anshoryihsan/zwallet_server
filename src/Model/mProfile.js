@@ -1,11 +1,11 @@
-const db = require('../Helpers/db');
+const db = require("../Helpers/db");
 
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt-nodejs");
 
 const profieModel = {
   getDataProfile: () => {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM profile ORDER BY id DESC', (err, res) => {
+      db.query("SELECT * FROM profile ORDER BY id DESC", (err, res) => {
         if (!err) {
           resolve(res);
         }
@@ -25,7 +25,7 @@ const profieModel = {
     });
   },
   getDataProfileByName: (data) => {
-    let {name, limit, page} = data;
+    let { name, limit, page } = data;
     if (!limit) limit = 5;
     else limit = parseInt(limit);
     if (!page) page = 0;
@@ -43,13 +43,13 @@ const profieModel = {
   },
   setDataProfile: (body) => {
     return new Promise((resolve, reject) => {
-      const {password} = body;
+      const { password } = body;
       bcrypt.hash(password, 10, function (err, hashPass) {
-        const newBody = {...body, password: hashPass};
+        const newBody = { ...body, password: hashPass };
         if (err) {
           reject(err);
         }
-        const query = 'INSERT INTO profile SET ?';
+        const query = "INSERT INTO profile SET ?";
         db.query(query, newBody, (err, data) => {
           if (!err) {
             resolve(newBody);
@@ -61,7 +61,7 @@ const profieModel = {
     });
   },
   updateDataProfile: (id, body) => {
-    console.log(id, 'm');
+    console.log(id, "m");
     return new Promise((resolve, reject) => {
       db.query(`SELECT * FROM profile WHERE id=${id.id}`, (err, result) => {
         if (err) {
@@ -69,9 +69,9 @@ const profieModel = {
         } else {
           body.photo = !body.photo ? result[0].photo : body.photo;
           // console.log(body);
-          const {password} = body;
+          const { password } = body;
           bcrypt.hash(password, 10, function (err, hashPass) {
-            const newBody = {...body, password: hashPass};
+            const newBody = { ...body, password: hashPass };
             // console.log(body);
             if (err) {
               reject(err);
@@ -104,7 +104,7 @@ const profieModel = {
           } else {
             password = bcrypt.hashSync(body.password, bcrypt.genSaltSync(10));
           }
-          const newBody = {...body, password: password};
+          const newBody = { ...body, password: password };
           const query = `UPDATE profile SET ? WHERE id=${id}`;
           db.query(query, newBody, (err, data) => {
             // console.log(data);
@@ -120,7 +120,7 @@ const profieModel = {
   },
   deleteDataProfile: (param) => {
     return new Promise((resolve, reject) => {
-      (sql = 'DELETE FROM profile WHERE id=?'),
+      (sql = "DELETE FROM profile WHERE id=?"),
         db.query(sql, param, (err, res) => {
           if (!err) {
             resolve(res);
