@@ -1,5 +1,5 @@
 const db = require("../Helpers/db");
-const bcrypt = require("bcrypt-nodejs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authModel = {
   register: (body) => {

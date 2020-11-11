@@ -1,6 +1,6 @@
 const db = require("../Helpers/db");
 
-const bcrypt = require("bcrypt-nodejs");
+const bcrypt = require("bcrypt");
 
 const profieModel = {
   getDataProfile: () => {
