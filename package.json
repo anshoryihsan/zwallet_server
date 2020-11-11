@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "zwallet.js",
   "scripts": {
-    "test": "node zwallet.js"
+    "test": "jest",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
