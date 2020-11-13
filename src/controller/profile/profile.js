@@ -1,7 +1,7 @@
-const {failed} = require('../../Helpers/res');
-const response = require('../../Helpers/res');
-const upload = require('../../Helpers/upload');
-const profileModel = require('../../Model/mProfile');
+const { failed } = require("../../Helpers/res");
+const response = require("../../Helpers/res");
+const upload = require("../../Helpers/upload");
+const profileModel = require("../../Model/mProfile");
 
 module.exports = {
   getDataProfile: (req, res) => {
@@ -32,7 +32,7 @@ module.exports = {
       .catch((err) => response.failed(err, res));
   },
   setDataProfile: (req, res) => {
-    const uploadImage = upload.single('image');
+    const uploadImage = upload.single("image");
     uploadImage(req, res, (err) => {
       if (err) {
         if (err.code === `LIMIT_FIELD_VALUE`) {
@@ -43,12 +43,12 @@ module.exports = {
       } else {
         const body = req.body;
         body.photo = !req.file
-          ? ''
+          ? ""
           : `${process.env.BASE_URL}/public/image/${req.file.filename}`;
         // console.log(body);
         profileModel
           .setDataProfile(body)
-          .then((data) => response.success(data, res, 'insert data success'))
+          .then((data) => response.success(data, res, "insert data success"))
           .catch((err) => response.failed(err, res));
       }
     });
@@ -66,7 +66,7 @@ module.exports = {
   //     .catch((err) => response.failed(err, res));
   // },
   updateDataProfile: (req, res) => {
-    const uploadImage = upload.single('image');
+    const uploadImage = upload.single("image");
     uploadImage(req, res, (err) => {
       if (err) {
         if (err.code === `LIMIT_FIELD_VALUE`) {
@@ -77,7 +77,6 @@ module.exports = {
       } else {
         const body = req.body;
         body.photo = !req.file ? req.file : req.file.filename;
-        // console.log(body);
         profileModel
           .updateDataProfile(req.params, req.body)
           .then((data) => response.success(data, res))
@@ -86,12 +85,8 @@ module.exports = {
     });
   },
   updatePatchDataProfile: (req, res) => {
-    // const id = req.id;
-    // console.log(req.body);
-    // console.log(req.params.id);
-    const uploadImage = upload.single('image');
+    const uploadImage = upload.single("image");
     uploadImage(req, res, (err) => {
-      // console.log(req.body);
       if (err) {
         if (err.code === `LIMIT_FIELD_VALUE`) {
           response.failed(err, res);
@@ -103,7 +98,6 @@ module.exports = {
         body.photo = !req.file
           ? req.file
           : `${process.env.BASE_URL}/public/image/${req.file.filename}`;
-        // console.log(body);
         profileModel
           .updatePatchDataProfile(req.tokenId, req.body)
           .then((data) => response.success(data, res))
@@ -114,14 +108,14 @@ module.exports = {
   deleteDataProfile: (req, res) => {
     profileModel
       .deleteDataProfile(req.params.id)
-      .then(() => response.success([], res, 'data has been deleted'))
+      .then(() => response.success([], res, "data has been deleted"))
       .catch((err) => response.failed(err, res));
   },
   uploadImg: (req, res) => {
-    const uploadImage = upload.single('image');
+    const uploadImage = upload.single("image");
     uploadImage(req, res, (err) => {
       if (!req.file) {
-        response.failed(err, res, 'must be a picture!');
+        response.failed(err, res, "must be a picture!");
       } else {
         if (!err) {
           res.status(201).send({
